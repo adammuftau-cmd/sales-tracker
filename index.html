@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ledger — Shop Tracker</title>
+<meta name="theme-color" content="#0F3D3E">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ================= AUTH SCREEN ================= -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-mark"><div class="coin">₵</div><span class="wordmark">Ledger</span></div>
+    <h1 id="auth-title">Welcome back</h1>
+    <p class="sub" id="auth-sub">Sign in to your shop's ledger.</p>
+
+    <form id="auth-form">
+      <div class="field" id="field-shopname" style="display:none;">
+        <label for="auth-shopname">Shop name</label>
+        <input type="text" id="auth-shopname" placeholder="e.g. Adjoa's Provisions">
+      </div>
+      <div class="field">
+        <label for="auth-email">Email</label>
+        <input type="email" id="auth-email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="auth-password">Password</label>
+        <input type="password" id="auth-password" required autocomplete="current-password" minlength="6">
+      </div>
+      <div class="auth-error" id="auth-error"></div>
+      <button type="submit" class="btn btn-primary" id="auth-submit">Sign in</button>
+    </form>
+    <div class="auth-toggle">
+      <span id="auth-toggle-text">Don't have an account?</span>
+      <button type="button" id="auth-toggle-btn">Create one</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= APP SHELL ================= -->
+<div id="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <div class="wordmark">₵ Ledger</div>
+      <div class="shopname" id="shop-name-display">My Shop</div>
+    </div>
+    <ul class="nav-list">
+      <li><button class="nav-btn active" data-view="dashboard"><span class="dot"></span>Dashboard</button></li>
+      <li><button class="nav-btn" data-view="sales"><span class="dot"></span>Sales</button></li>
+      <li><button class="nav-btn" data-view="inventory"><span class="dot"></span>Inventory</button></li>
+      <li><button class="nav-btn" data-view="expenses"><span class="dot"></span>Expenses</button></li>
+      <li><button class="nav-btn" data-view="debts"><span class="dot"></span>Debt Tracker</button></li>
+      <li><button class="nav-btn" data-view="budget"><span class="dot"></span>Budget Sheet</button></li>
+    </ul>
+    <div class="sidebar-foot">
+      <div class="user-email" id="user-email-display"></div>
+      <button class="btn btn-ghost btn-sm" id="signout-btn" style="width:100%;color:#FAF6EE;border-color:rgba(250,246,238,0.25);">Sign out</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="menu-toggle" id="menu-toggle">☰</button>
+        <h2 id="view-title">Dashboard</h2>
+      </div>
+      <div id="topbar-actions"></div>
+    </div>
+
+    <div class="view">
+      <section class="view-section active" id="view-dashboard"></section>
+      <section class="view-section" id="view-sales"></section>
+      <section class="view-section" id="view-inventory"></section>
+      <section class="view-section" id="view-expenses"></section>
+      <section class="view-section" id="view-debts"></section>
+      <section class="view-section" id="view-budget"></section>
+    </div>
+  </div>
+
+  <button class="fab" id="fab-add">+</button>
+</div>
+
+<!-- ================= MODAL (shared) ================= -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script type="module" src="js/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js').catch(console.error);
+  });
+}
+</script>
+</body>
+</html>
