@@ -163,10 +163,10 @@ els.form.addEventListener('submit', async (e) => {
       await signIn(email, password);
     }
   } catch (err) {
-    els.error.textContent = friendlyAuthError(err.code);
-  } finally {
-    els.submit.disabled = false;
-  }
+    console.error('Firebase Authentication Error:', err);
+    els.error.textContent =
+        `${err.code || 'Unknown error'}: ${err.message || 'Something went wrong.'}`;
+}
 });
 
 function friendlyAuthError(code) {
